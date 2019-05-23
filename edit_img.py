@@ -6,47 +6,34 @@ tate=8
 yoko=8
 imgpass="original.jpg"
 def main(tate:int,yoko:int,imgpass:str):
-  global img,width,height,draw#無いとダメらしい
+  global img,width,height#無いとダメらしい
   # 元となる画像の読み込み
   img = Image.open(imgpass)
   # オリジナル画像の幅と高さを取得
   width, height = img.size
   draw = ImageDraw.Draw(img)
-  draw_vertical(tate)
-  draw_horizonal(yoko)
+  draw_vertical(tate,draw)
+  draw_horizonal(yoko,draw)
 def create_white(tate:int,yoko:int):
-  global draw_white
   # オリジナル画像と同じサイズの画像を生成
   img_white = Image.new('RGBA',(width,height))
   img_white.putalpha(0)
   draw_white = ImageDraw.Draw(img_white)
-  draw_vertical_w(tate)
-  draw_horizonal_w(yoko)
+  draw_vertical(tate,draw_white)
+  draw_horizonal(yoko,draw_white)
   img_white.save('white_grided.png','PNG')
 #縦線を引く
-def draw_vertical(n:int):
+def draw_vertical(n:int,draw):
   n+=1
   for i in range(1,n):
     a=int(width/n)
     draw.line([(a*i,0),(a*i,height)],fill=(255,0,0),width=1)
 #横線を引く
-def draw_horizonal(n:int):
+def draw_horizonal(n:int,draw):
   n+=1
   for i in range(1,n):
     a=int(height/n)
     draw.line([(0,a*i),(width,a*i)],fill=(255,0,0),width=1)
-#縦線を引く(白紙に対して)
-def draw_vertical_w(n):
-  n+=1
-  for i in range(1,n):
-    a=int(width/n)
-    draw_white.line([(a*i,0),(a*i,height)],fill=(255,0,0),width=1)
-#横線を引く(白紙に対して)
-def draw_horizonal_w(n):
-  n+=1
-  for i in range(1,n):
-    a=int(height/n)
-    draw_white.line([(0,a*i),(width,a*i)],fill=(255,0,0),width=1)
 def saveimg():
   img.save('original_grided.png','PNG')#場所を選べるように書き直したい
   #白紙画像も同じように保存できるようにしたい
@@ -70,23 +57,22 @@ label2.grid(row=1,column=0)
 label3=ttk.Label(frame1,text="横")
 label3.grid(row=1,column=1)
 
-sptxt1=StringVar()
-sptxt1.set(tate)
-spinbox1=Spinbox(frame1,from_=0,to=1000,textvariable=sptxt1)
-spinbox1.grid(row=2,column=0)
-
-sptxt2=StringVar()
-sptxt2.set(yoko)
-spinbox2=Spinbox(frame1,from_=0,to=1000,textvariable=sptxt2)
-spinbox2.grid(row=2,column=1)
-
-def button1():
+def redrawline():
   global img_tk
   main(int(sptxt1.get()),int(sptxt2.get()),imgpass)
   img_tk=ImageTk.PhotoImage(img)
   label1.configure(image=img_tk)
-button1=ttk.Button(frame1,text="線を引き直す",command=button1)
-button1.grid(row=2,column=2)
+sptxt1=StringVar()
+sptxt1.set(tate)
+spinbox1=Spinbox(frame1,from_=0,to=1000,textvariable=sptxt1,command=redrawline)
+spinbox1.grid(row=2,column=0)
+
+sptxt2=StringVar()
+sptxt2.set(yoko)
+spinbox2=Spinbox(frame1,from_=0,to=1000,textvariable=sptxt2,command=redrawline)
+spinbox2.grid(row=2,column=1)
+
+#button1 (線の引き直し)　いらねえ
 def button2():
   create_white(int(sptxt1.get()),int(sptxt2.get()))
 button2=ttk.Button(frame1,text="白紙を生成",command=button2)
