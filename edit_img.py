@@ -14,30 +14,36 @@ def main(tate:int,yoko:int,imgpass:str):
   draw = ImageDraw.Draw(img)
   draw_vertical(tate)
   draw_horizonal(yoko)
-def create_white():
+def create_white(tate:int,yoko:int):
   global draw_white
   # オリジナル画像と同じサイズの画像を生成
   img_white = Image.new('RGBA',(width,height))
   img_white.putalpha(0)
   draw_white = ImageDraw.Draw(img_white)
+  draw_vertical_w(tate)
+  draw_horizonal_w(yoko)
   img_white.save('white_grided.png','PNG')
 #縦線を引く
-def draw_vertical(n):
+def draw_vertical(n:int):
+  n+=1
   for i in range(1,n):
     a=int(width/n)
     draw.line([(a*i,0),(a*i,height)],fill=(255,0,0),width=1)
 #横線を引く
-def draw_horizonal(n):
+def draw_horizonal(n:int):
+  n+=1
   for i in range(1,n):
     a=int(height/n)
     draw.line([(0,a*i),(width,a*i)],fill=(255,0,0),width=1)
 #縦線を引く(白紙に対して)
 def draw_vertical_w(n):
+  n+=1
   for i in range(1,n):
     a=int(width/n)
     draw_white.line([(a*i,0),(a*i,height)],fill=(255,0,0),width=1)
 #横線を引く(白紙に対して)
 def draw_horizonal_w(n):
+  n+=1
   for i in range(1,n):
     a=int(height/n)
     draw_white.line([(0,a*i),(width,a*i)],fill=(255,0,0),width=1)
@@ -81,5 +87,10 @@ def button1():
   label1.configure(image=img_tk)
 button1=ttk.Button(frame1,text="線を引き直す",command=button1)
 button1.grid(row=2,column=2)
+def button2():
+  create_white(int(sptxt1.get()),int(sptxt2.get()))
+button2=ttk.Button(frame1,text="白紙を生成",command=button2)
+button2.grid(row=2,column=3)
+
 
 root.mainloop()
