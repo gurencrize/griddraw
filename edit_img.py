@@ -59,9 +59,7 @@ frame1['height'] = 200
 frame1['width'] = 400
 frame1.grid()
 
-img = Image.open("sample.jpg")
-img_tk=ImageTk.PhotoImage(img)
-label1=ttk.Label(frame1,image=img_tk)
+label1=ttk.Label(frame1)
 label1.grid(row=2,column=0,columnspan=5)
 
 label2=ttk.Label(frame1,text="縦")
