@@ -85,8 +85,8 @@ def button1():
   iDir = os.path.abspath(os.path.dirname(__file__))
   imgpath = filedialog.askopenfilename(filetypes = fTyp,initialdir = iDir)
   image.readimg(imgpath)
-button2=ttk.Button(frame1,text="画像を読み込み",command=button1)
-button2.grid(row=1,column=3)
+button1=ttk.Button(frame1,text="画像を読み込み",command=button1)
+button1.grid(row=1,column=3)
 
 def button2():
   image.create_white()
