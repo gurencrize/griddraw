@@ -21,6 +21,7 @@ class griddraw:
     draw_vertical(tate,draw_white)
     draw_horizonal(yoko,draw_white)
     img_white.save('white_grided.png','PNG')
+    print("created white image!")
   def updatelabel1(self):
     img = Image.open(self.imgpass)
     drawimg = ImageDraw.Draw(img)
