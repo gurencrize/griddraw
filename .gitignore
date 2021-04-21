@@ -5,3 +5,4 @@ __pycache__/edit_img.cpython-39.pyc
 build/
 dist/
 edit_img.spec
+*.clip
