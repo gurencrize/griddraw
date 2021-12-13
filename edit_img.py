@@ -1,13 +1,14 @@
-import numpy as np
 from tkinter import Tk,ttk,filedialog,StringVar,Spinbox,PhotoImage
-from PIL import Image,ImageDraw,ImageTk
+from PIL import Image,ImageDraw
 import os
 tate=8
 yoko=8
 class griddraw:
+    img=None
     imgpass=""
     width=0
     height=0
+    bordercolor=(255,0,0)
     def readimg(self, imgpass):
         self.imgpass=imgpass
         self.img = Image.open(imgpass)
@@ -30,6 +31,7 @@ class griddraw:
         # 画面に線を引く
         self.draw_vertical(int(sptxt1.get()),drawimg)
         self.draw_horizonal(int(sptxt2.get()),drawimg)
+        self.draw_outline(drawimg)
         img.save('original_grided.png','PNG')
         #画像出力処理ぼ どこに出力できるかを選べたほうがいいかもしれない
         photoim=PhotoImage(file='original_grided.png')
@@ -37,26 +39,24 @@ class griddraw:
         label1.image=photoim
 
     def draw_vertical(self,n:int,draw):
-        n+=1
-        width=image.getwidth()
-        height=image.getheight()
+        width=self.width
+        height=self.height
         for i in range(1,n):
             a=int(width/n)
-            draw.line([(a*i,0),(a*i,height)],fill=(255,0,0),width=1)
+            draw.line([(a*i,0),(a*i,height)],fill=self.bordercolor,width=1)
 
     def draw_horizonal(self,n:int,draw):
-        n+=1
-        width=image.getwidth()
-        height=image.getheight()
+        width=self.width
+        height=self.height
         for i in range(1,n):
             a=int(height/n)
-            draw.line([(0,a*i),(width,a*i)],fill=(255,0,0),width=1)
+            draw.line([(0,a*i),(width,a*i)],self.bordercolor,width=1)
 
-    def getwidth(self):
-        return self.width
-
-    def getheight(self):
-        return self.height
+    def draw_outline(self,draw):
+        # 座標がゼロスタートなので、サイズの数値より1px低い値が縁になる
+        width=self.width-1
+        height=self.height-1
+        draw.line([(0,0),(width,0),(width,height),(0,height),(0,0)],self.bordercolor,width=1)
 
 image=griddraw()
 root = Tk()
