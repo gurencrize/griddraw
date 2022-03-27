@@ -17,12 +17,13 @@ class griddraw:
 
     def create_white(self):
         # オリジナル画像と同じサイズの画像を生成
-        img_white = Image.new('RGBA',(self.width,self.height))
-        img_white.putalpha(0)
-        draw_white = ImageDraw.Draw(img_white)
-        self.draw_vertical(int(sptxt1.get()),draw_white)
-        self.draw_horizonal(int(sptxt2.get()),draw_white)
-        img_white.save('white_grided.png','PNG')
+        imgWhite = Image.new('RGBA',(self.width,self.height))
+        imgWhite.putalpha(0)
+        drawWhite = ImageDraw.Draw(imgWhite)
+        self.draw_vertical(int(sptxt1.get()),drawWhite)
+        self.draw_horizonal(int(sptxt2.get()),drawWhite)
+        self.draw_outline(drawWhite)
+        imgWhite.save('white_grided.png','PNG')
         print("created white image!")
 
     def updatelabel1(self):
