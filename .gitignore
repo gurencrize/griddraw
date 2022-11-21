@@ -6,3 +6,4 @@ build/
 dist/
 edit_img.spec
 *.clip
+*.pyc
